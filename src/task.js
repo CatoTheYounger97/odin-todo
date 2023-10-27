@@ -1,3 +1,5 @@
+import { addTaskToDom } from "./dom";
+import { gProject } from "./project";
 // object: task object
 // function: create, edit, delete
 
@@ -12,4 +14,17 @@ export class Task {
     print() {
         console.log(this.title);
     }
+}
+
+export function createTask()
+{
+    const task = new Task();
+    gProject.addTask(task);
+    addTaskToDom(task);
+}
+
+
+function removeTask(task) 
+{
+
 }

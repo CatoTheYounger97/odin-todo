@@ -21,3 +21,5 @@ export class Project {
     // get/set
 
 }
+
+export const gProject = new Project('default');

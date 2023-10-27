@@ -1,27 +1,55 @@
+import { createTask } from "./task";
+
 // build page, header, main, footer
-export function buildPage() 
+export function setupDom() 
 {
-    const page = document.createElement('div');
-    page.setAttribute('id', 'page');
-    
-    document.body.appendChild(page);
-    page.appendChild( buildTaskButton() );
+    // Create the page container
+    const newPage = document.createElement('div');
+    newPage.setAttribute('id', 'page');
+    document.body.appendChild(newPage);
+    // create the new task button
+    const newTaskButton = createButon('new', createTask);
+    newPage.appendChild( newTaskButton );
 }
 
 
-function buildTaskButton() 
+export function addTaskToDom(task) 
+{
+    const input = document.createElement('input');
+    input.setAttribute('type', 'text');
+
+    const removeButton = createButon('X', () => {
+        console.log('remove button');
+    });
+    
+    const taskNode = document.createElement('div');
+    taskNode.className = 'task';
+    taskNode.appendChild(input);
+    taskNode.appendChild(removeButton);
+
+    const parent = document.querySelector('#page');
+    parent.appendChild(taskNode);
+}
+
+function removeTaskFromDom(task)
+{
+    
+}
+
+function createButon(text, func) 
 {
     const button = document.createElement('button');
-    button.textContent = 'create';
+    button.textContent = text;
 
-    button.addEventListener('click', (b) => {
-        // function for generating the class
-        console.log('click');
-    });
+    button.addEventListener('click', func);
 
     return button;
 }
+// function deleteNode()
+// {
+//     document.deleteNode();
 
+// }
 
 // DEMO CODE FOR DOM FORM GENERATION
 // function createFormInput(name)
