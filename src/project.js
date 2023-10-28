@@ -18,8 +18,10 @@ export class Project {
         this.taskList.push(task);
     }
     // remove task
+    removeTask(task) {
+        this.taskList = this.taskList.filter((item) => item.timestamp != task.timestamp);
+    }
     // get/set
 
 }
 
-export const gProject = new Project('default');

@@ -1,13 +1,14 @@
-import { addTaskToDom } from "./dom";
-import { gProject } from "./project";
+import { addTaskToDom, removeTaskFromDom } from "./dom";
+import { Project } from "./project";
 // object: task object
 // function: create, edit, delete
 
 export class Task {
-    constructor(title, description, dueDate) {
-        this.title = title ?? 'untitled';
-        this.description = description ?? 'none'; 
-        this.dueDate = dueDate ?? 'none';
+    constructor(timestamp) {
+        this.timestamp = timestamp;
+        this.title = 'untitled';
+        this.description = 'none'; 
+        this.dueDate = 'none';
         this.status = 'created';
     }
 
@@ -18,13 +19,20 @@ export class Task {
 
 export function createTask()
 {
-    const task = new Task();
-    gProject.addTask(task);
+    const task = new Task(Date.now());
+    gTaskList.addTask(task);
     addTaskToDom(task);
+    console.log(gTaskList);
+
 }
 
 
-function removeTask(task) 
+export function removeTask(task) 
 {
-
+    gTaskList.removeTask(task);
+    removeTaskFromDom(task);
+    console.log(gTaskList);
 }
+
+// Project object for tracking all tasks 
+export const gTaskList = new Project('default');

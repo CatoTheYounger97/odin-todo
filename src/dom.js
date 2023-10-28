@@ -1,4 +1,4 @@
-import { createTask } from "./task";
+import { createTask, removeTask } from "./task";
 
 // build page, header, main, footer
 export function setupDom() 
@@ -19,10 +19,11 @@ export function addTaskToDom(task)
     input.setAttribute('type', 'text');
 
     const removeButton = createButon('X', () => {
-        console.log('remove button');
+        removeTask(task);
     });
-    
+    // DOM id can't start with a number
     const taskNode = document.createElement('div');
+    taskNode.setAttribute('id', 'id' + task.timestamp);
     taskNode.className = 'task';
     taskNode.appendChild(input);
     taskNode.appendChild(removeButton);
@@ -31,9 +32,11 @@ export function addTaskToDom(task)
     parent.appendChild(taskNode);
 }
 
-function removeTaskFromDom(task)
+export function removeTaskFromDom(task)
 {
-    
+    const node = document.querySelector('#id'+task.timestamp);
+    const parent = document.querySelector('#page');
+    parent.removeChild(node);
 }
 
 function createButon(text, func) 
