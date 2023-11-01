@@ -4,18 +4,18 @@ import { createProject, createTask } from "./interactive";
 // INITIAL DOM SETUP
 export function setupDom()
 {
+    
     const container = document.createElement('div');
     container.setAttribute('id', 'container');
     
     document.body.appendChild(container);
-    
     displayProject();
 }
 
 // DISPLAY PROJECT
 export function displayProject()
 {
-    const parent = document.querySelector('#container');
+    parent = document.querySelector('#container');
     parent.innerHTML = '';
 
     const newProjectButton = createButton('+Project', createProject );
@@ -32,8 +32,6 @@ function buildProject(project)
     const projectName = document.createElement('p');
     projectName.textContent = project.name;
 
-    // draw each task in the project
-    // button for new Task within a project (trigers the form);
     const editButton = createButton('edit', () => {
         options.remove();
         projectCard.appendChild( buildProjectForm(project) );
@@ -45,18 +43,23 @@ function buildProject(project)
         projectCard.remove();
     });
 
+    const addTask = createButton('+Task', () => {
+        createTask(project);
+    });
+
     const options = document.createElement('div');
     options.appendChild(projectName);
     options.appendChild(editButton);
     options.appendChild(rmvButton);
+    options.appendChild(addTask);
+
+    const taskCard = document.createElement('div');
+    displayTask(project, taskCard);
 
     const projectCard = document.createElement('div');
     projectCard.setAttribute('id', 'id'+project.timestamp);
     projectCard.appendChild(options);
-
-
-    // display tasks
-
+    projectCard.appendChild(taskCard);
 
     return projectCard;
 }
@@ -82,6 +85,61 @@ function buildProjectForm(project)
 }
 
 // DISPLAY TASK
+function displayTask(project, taskCard)
+{
+    project.list.forEach((task) => {
+        taskCard.appendChild( buildTask(task, project) );
+    });
+}
+
+
+function buildTask(task, project) 
+{
+    const taskName = document.createElement('p');
+    taskName.textContent = task.name;
+
+    const editButton = createButton('edit', () => {
+        options.remove();
+        taskCard.appendChild( buildTaskForm(task) );
+
+    });
+
+    const rmvButton = createButton('X', () => {
+        project.removeTask(task);
+        taskCard.remove();
+    });
+
+    const options = document.createElement('div');
+    options.appendChild(taskName);
+    options.appendChild(editButton);
+    options.appendChild(rmvButton);
+
+    const taskCard = document.createElement('div');
+    taskCard.setAttribute('id', 'id'+project.timestamp);
+    taskCard.appendChild(options);
+
+    return taskCard;
+}
+
+function buildTaskForm(task) 
+{
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = task.name;
+    const button = createButton('save', (e)=> {
+        e.preventDefault();
+        task.name = input.value;
+        form.remove();
+
+        displayProject();
+    });
+    
+    const form = document.createElement('form');
+    form.appendChild(input);
+    form.appendChild(button);
+
+    return form;
+}
 
 // HELPER FUNCS
 function createButton(text, func) 
