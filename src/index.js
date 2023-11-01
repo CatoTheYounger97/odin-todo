@@ -1,4 +1,4 @@
-import { setupDom } from "./dom-setup";
+import { setupDom } from "./dom";
 
 export class Task {
     constructor(name) {
@@ -12,9 +12,6 @@ export class Project {
         this.name = name;
         this.timestamp = Date.now();
         this.list = [];
-    }
-    setName(name) {
-        this.name = name;
     }
     addTask(task) {
         this.list.push(task);

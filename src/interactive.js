@@ -1,5 +1,5 @@
-import { Project, gProjectList } from ".";
-import { displayProject } from "./dom-setup";
+import { Project, Task, gProjectList } from ".";
+import { displayProject } from "./dom";
 
 // add new Project
 export function createProject() 
@@ -8,10 +8,15 @@ export function createProject()
     gProjectList.push(newProject);
     displayProject( newProject );
 }
-// submit new project
-
 
 // Task Submit Button
+
+export function createTask(project) 
+{
+    const newTask = new Task('New Task');
+    project.addTask(newTask);
+    displayProject( project );
+}
 
 // Task Delete Button 
 

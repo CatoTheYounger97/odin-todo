@@ -1,26 +1,29 @@
 import { gDefaultProject, gProjectList } from ".";
-import { createProject } from "./interactive";
+import { createProject, createTask } from "./interactive";
 
 // INITIAL DOM SETUP
 export function setupDom()
 {
-    // button for add new project
-    const newProjectButton = createButton('+Project', createProject );
-
     const container = document.createElement('div');
     container.setAttribute('id', 'container');
-    container.appendChild(newProjectButton);
-
+    
     document.body.appendChild(container);
     
-    displayProject(gDefaultProject);
+    displayProject();
 }
 
 // DISPLAY PROJECT
-export function displayProject(project)
+export function displayProject()
 {
     const parent = document.querySelector('#container');
-    parent.appendChild( buildProject(project) );
+    parent.innerHTML = '';
+
+    const newProjectButton = createButton('+Project', createProject );
+    container.appendChild(newProjectButton);
+    
+    gProjectList.forEach((p) => {
+        parent.appendChild( buildProject(p) );
+    });
 }
 
 
@@ -46,7 +49,7 @@ function buildProject(project)
     options.appendChild(projectName);
     options.appendChild(editButton);
     options.appendChild(rmvButton);
-    
+
     const projectCard = document.createElement('div');
     projectCard.setAttribute('id', 'id'+project.timestamp);
     projectCard.appendChild(options);
@@ -65,11 +68,10 @@ function buildProjectForm(project)
     input.value = project.name;
     const button = createButton('save', (e)=> {
         e.preventDefault();
-        // const formInput = document.querySelector('#id'+project.timestamp+' > form > input');
         project.name = input.value;
         form.remove();
 
-        displayProject(project);
+        displayProject();
     });
     
     const form = document.createElement('form');
@@ -78,6 +80,8 @@ function buildProjectForm(project)
 
     return form;
 }
+
+// DISPLAY TASK
 
 // HELPER FUNCS
 function createButton(text, func) 
