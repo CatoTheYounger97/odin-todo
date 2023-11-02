@@ -1,5 +1,4 @@
 import { Project, Task, gDefaultProject, gProjectList } from ".";
-import { createProject, createTask } from "./interactive";
 
 // INITIAL DOM SETUP
 export function setupDom()
