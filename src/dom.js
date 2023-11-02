@@ -93,10 +93,15 @@ function buildProjectForm(project)
         form.remove();
         displayProject();
     });
+
+    const cancelBtn = createButton('cancel', () => {
+        displayProject();
+    });
     
     const form = document.createElement('form');
     form.appendChild(input);
     form.appendChild(button);
+    form.appendChild(cancelBtn);
 
     return form;
 }
@@ -160,10 +165,15 @@ function buildTaskForm(task, project)
         form.remove();
         displayProject();
     });
+
+    const cancelBtn = createButton('cancel', () => {
+        displayProject();
+    });
     
     const form = document.createElement('form');
     form.appendChild(input);
     form.appendChild(button);
+    form.appendChild(cancelBtn);
 
     return form;
 }
