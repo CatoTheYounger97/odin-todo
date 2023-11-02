@@ -22,11 +22,12 @@ export function displayProject()
         newProjectButton.style.display = 'none';
     });
     newProjectButton.setAttribute('id', 'new-project');
-    parent.appendChild(newProjectButton);
     
     gProjectList.forEach((p) => {
         parent.appendChild( buildProject(p) );
     });
+
+    parent.appendChild(newProjectButton);
 }
 
 
@@ -37,6 +38,7 @@ function buildProject(project)
 
     const editButton = createButton('edit', () => {
         options.remove();
+        addTask.remove();
         projectCard.appendChild( buildProjectForm(project) );
 
     });
@@ -55,16 +57,16 @@ function buildProject(project)
     options.appendChild(projectName);
     options.appendChild(editButton);
     options.appendChild(rmvButton);
-    options.appendChild(addTask);
-
+    
     const taskCard = document.createElement('div');
     
     displayTask(project, taskCard);
-
+    
     const projectCard = document.createElement('div');
     projectCard.setAttribute('id', 'id'+project.timestamp);
     projectCard.appendChild(options);
     projectCard.appendChild(taskCard);
+    projectCard.appendChild(addTask);
 
     return projectCard;
 }
@@ -86,6 +88,7 @@ function buildProjectForm(project)
             newProject.name = input.value;
 
             gProjectList.push(newProject);
+            console.log(gProjectList);
         } else {
             project.name = input.value;
         }
