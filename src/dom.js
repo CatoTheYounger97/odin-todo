@@ -74,7 +74,9 @@ function buildProjectForm(project)
 {
     const input = document.createElement('input');
     input.type = 'text';
-    if (project !== 'new') {
+    if (project === 'new') {
+        input.value = 'New Project';
+    } else {
         input.value = project.name;
     }
 
@@ -141,10 +143,10 @@ function buildTaskForm(task, project)
 {
     const input = document.createElement('input');
     input.type = 'text';
-    if (task !== 'new') {
-        input.value = task.name;
-    } else {
+    if (task === 'new') {
         input.value = 'New Task';
+    } else {
+        input.value = task.name;
     }
 
     const button = createButton('save', (e)=> {
