@@ -1,4 +1,4 @@
-import { gDefaultProject, gProjectList } from ".";
+import { Project, gDefaultProject, gProjectList } from ".";
 import { createProject, createTask } from "./interactive";
 
 // INITIAL DOM SETUP
@@ -18,8 +18,12 @@ export function displayProject()
     parent = document.querySelector('#container');
     parent.innerHTML = '';
 
-    const newProjectButton = createButton('+Project', createProject );
-    container.appendChild(newProjectButton);
+    const newProjectButton = createButton('+Project', () => {
+        parent.appendChild(buildProjectForm('new'));
+        newProjectButton.style.display = 'none';
+    });
+    newProjectButton.setAttribute('id', 'new-project');
+    parent.appendChild(newProjectButton);
     
     gProjectList.forEach((p) => {
         parent.appendChild( buildProject(p) );
@@ -68,12 +72,22 @@ function buildProjectForm(project)
 {
     const input = document.createElement('input');
     input.type = 'text';
-    input.value = project.name;
+    if (project !== 'new') {
+        input.value = project.name;
+    }
+
     const button = createButton('save', (e)=> {
         e.preventDefault();
-        project.name = input.value;
-        form.remove();
+        if (project === 'new') {
+            const newProject = new Project('New Project');
+            newProject.name = input.value;
 
+            gProjectList.push(newProject);
+        } else {
+            project.name = input.value;
+        }
+
+        form.remove();
         displayProject();
     });
     
