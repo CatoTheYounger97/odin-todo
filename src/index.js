@@ -22,14 +22,10 @@ export class Project {
         this.list = this.list.filter((t) => t !== task);
         console.log(this.list);
     }
-    editTask(task) {
-        task.name = prompt('new name');
-        console.log(this.list);
-    }
 }
 
 
-// TEST 
+// SETUP 
 export const gProjectList = [];
 export const gDefaultProject = new Project('task-default');
 gProjectList.push(gDefaultProject); // maybe dont push the default project, see how sorting project works
