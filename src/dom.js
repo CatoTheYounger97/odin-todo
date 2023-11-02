@@ -1,4 +1,4 @@
-import { Project, gDefaultProject, gProjectList } from ".";
+import { Project, Task, gDefaultProject, gProjectList } from ".";
 import { createProject, createTask } from "./interactive";
 
 // INITIAL DOM SETUP
@@ -48,7 +48,8 @@ function buildProject(project)
     });
 
     const addTask = createButton('+Task', () => {
-        createTask(project);
+        projectCard.appendChild( buildTaskForm('new', project) );
+        addTask.style.display = 'none';
     });
 
     const options = document.createElement('div');
@@ -58,6 +59,7 @@ function buildProject(project)
     options.appendChild(addTask);
 
     const taskCard = document.createElement('div');
+    
     displayTask(project, taskCard);
 
     const projectCard = document.createElement('div');
@@ -135,16 +137,26 @@ function buildTask(task, project)
     return taskCard;
 }
 
-function buildTaskForm(task) 
+function buildTaskForm(task, project) 
 {
     const input = document.createElement('input');
     input.type = 'text';
-    input.value = task.name;
+    if (task !== 'new') {
+        input.value = task.name;
+    } else {
+        input.value = 'New Task';
+    }
+
     const button = createButton('save', (e)=> {
         e.preventDefault();
-        task.name = input.value;
-        form.remove();
+        if (task === 'new') {
+            const newTask = new Task(input.value);
+            project.addTask(newTask);
+        } else {
+            task.name = input.value;
+        }
 
+        form.remove();
         displayProject();
     });
     
