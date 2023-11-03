@@ -122,8 +122,10 @@ function displayTask(project, taskCard)
 
 function buildTask(task, project) 
 {
-    const taskName = document.createElement('p');
-    taskName.textContent = task.name;
+    const name = document.createElement('p');
+    name.textContent = task.name;
+    const description = document.createElement('p');
+    description.textContent = task.description;
 
     const editButton = createButton('edit', () => {
         options.remove();
@@ -137,7 +139,7 @@ function buildTask(task, project)
     });
 
     const options = document.createElement('div');
-    options.appendChild(taskName);
+    options.appendChild(name);
     options.appendChild(editButton);
     options.appendChild(rmvButton);
 
@@ -150,21 +152,32 @@ function buildTask(task, project)
 
 function buildTaskForm(task, project) 
 {
-    const input = document.createElement('input');
-    input.type = 'text';
+    const nodes = createTaskFormNodes();
+
     if (task === 'new') {
-        input.value = 'New Task';
+        nodes.name.input.value = 'New Task';
     } else {
-        input.value = task.name;
+        nodes.name.input.value = task.name;
+        nodes.desc.input.value = task.description;
+        nodes.date.input.value = task.dueDate;
+        nodes.prio.input.value = task.priority;
+
     }
 
-    const button = createButton('save', (e)=> {
+    const saveBtn = createButton('save', (e)=> {
         e.preventDefault();
         if (task === 'new') {
-            const newTask = new Task(input.value);
+            const newTask = new Task(nodes.name.input.value);
+            newTask.description = nodes.desc.input.value;
+            newTask.dueDate = nodes.date.input.value ;
+            newTask.priority = nodes.prio.input.value ;
+
             project.addTask(newTask);
         } else {
-            task.name = input.value;
+            task.name = nodes.name.input.value;
+            task.description = nodes.desc.input.value;
+            task.dueDate = nodes.date.input.value ;
+            task.priority = nodes.prio.input.value ;
         }
 
         form.remove();
@@ -175,12 +188,78 @@ function buildTaskForm(task, project)
         displayProject();
     });
     
+    const formInputs = document.createElement('div');
+    for (let n in nodes )
+    {
+        formInputs.appendChild(nodes[n].label);
+        formInputs.appendChild(nodes[n].input);
+    }
+    
     const form = document.createElement('form');
-    form.appendChild(input);
-    form.appendChild(button);
+    form.appendChild(formInputs);
+    form.appendChild(saveBtn);
     form.appendChild(cancelBtn);
 
     return form;
+}
+
+function createTaskFormNodes()
+{
+    // task name
+    const nameLabel = document.createElement('label');
+    nameLabel.textContent = 'Name:';
+    nameLabel.setAttribute('for', 'name');
+    const nameInput = document.createElement('input');
+    nameInput.setAttribute('id', 'name');
+    nameInput.type = 'text';
+    const name = { 
+        input: nameInput, 
+        label: nameLabel, 
+    };
+
+    // task description 
+    const descLabel = document.createElement('label');
+    descLabel.textContent = 'Description:';
+    descLabel.setAttribute('for', 'description');    
+    const descTextArea = document.createElement('textarea');
+    descTextArea.setAttribute('id', 'description');
+    const desc = { 
+        input: descTextArea, 
+        label: descLabel, 
+    };
+    // task due date
+    const dateLabel = document.createElement('label');
+    dateLabel.textContent = 'Date:';
+    dateLabel.setAttribute('for', 'date');
+    const dateInput = document.createElement('input');
+    dateInput.setAttribute('id', 'date');
+    dateInput.type = 'date';
+    const date = { 
+        input: dateInput, 
+        label: dateLabel, 
+    };
+
+    // task piority 
+    const prioLabel = document.createElement('label');
+    prioLabel.textContent = 'Priority:';
+    prioLabel.setAttribute('for', 'priority');
+    const prioInput = document.createElement('select');
+    prioInput.setAttribute('id', 'priority');
+
+    const options = ['low', 'medium', 'high'];
+    options.forEach((o) => {
+        const node = document.createElement('option');
+        node.value = o;
+        node.textContent = o;
+        prioInput.appendChild(node);
+    });
+
+    const prio = { 
+        input: prioInput, 
+        label: prioLabel, 
+    };
+
+    return { name, desc, date, prio };
 }
 
 // HELPER FUNCS
