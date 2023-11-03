@@ -27,7 +27,6 @@ export class Project {
 
 // SETUP 
 export const gProjectList = [];
-export const gDefaultProject = new Project('task-default');
-gProjectList.push(gDefaultProject); // maybe dont push the default project, see how sorting project works
+gProjectList.push(new Project('task-default'));
 
 setupDom();

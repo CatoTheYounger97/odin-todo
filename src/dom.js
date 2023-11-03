@@ -1,4 +1,4 @@
-import { Project, Task, gDefaultProject, gProjectList } from ".";
+import { Project, Task, gProjectList } from ".";
 
 // INITIAL DOM SETUP
 export function setupDom()
