@@ -41,7 +41,7 @@ function buildProject(project)
     const editButton = createButton('edit', () => {
         options.remove();
         addTask.remove();
-        projectCard.appendChild( buildProjectForm(project) );
+        projectCard.insertBefore( buildProjectForm(project), projectCard.firstElementChild );
 
     });
 
