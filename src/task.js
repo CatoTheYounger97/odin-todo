@@ -5,6 +5,7 @@ export class Task {
         this.description = '';
         this.dueDate = '';
         this.priority = '';
+        this.status = false; // task completion status 
         this.timestamp = Date.now();
     }
 }

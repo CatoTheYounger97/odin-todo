@@ -131,6 +131,15 @@ function buildTask(task, project)
     const priority = document.createElement('p');
     priority.textContent = `Priority: ${task.priority}`;
 
+    const checkBox = document.createElement('input');
+    checkBox.setAttribute('type', 'checkbox');
+    if (task.status)
+        checkBox.setAttribute('checked', true);
+    checkBox.addEventListener('click', () => {
+        task.status = task.status ? false : true;
+        displayProject();
+    });
+
     const editButton = createButton('edit', () => {
         info.remove();
         taskCard.appendChild( buildTaskForm(task) );
@@ -157,6 +166,7 @@ function buildTask(task, project)
     lessButton.style.display = 'none';
     // standard info 
     const standardInfo = document.createElement('div');
+    standardInfo.appendChild(checkBox);
     standardInfo.appendChild(name);
     standardInfo.appendChild(dueDate);
     // extra info 
