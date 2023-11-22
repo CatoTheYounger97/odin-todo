@@ -126,6 +126,10 @@ function buildTask(task, project)
     name.textContent = task.name;
     const description = document.createElement('p');
     description.textContent = task.description;
+    const dueDate = document.createElement('p');
+    dueDate.textContent = `Due Date: ${task.dueDate}`;
+    const priority = document.createElement('p');
+    priority.textContent = `Priority: ${task.priority}`;
 
     const editButton = createButton('edit', () => {
         options.remove();
@@ -140,6 +144,9 @@ function buildTask(task, project)
 
     const options = document.createElement('div');
     options.appendChild(name);
+    options.appendChild(dueDate);
+    options.appendChild(priority);
+    options.appendChild(description);
     options.appendChild(editButton);
     options.appendChild(rmvButton);
 

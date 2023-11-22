@@ -5,6 +5,12 @@ import { Task } from "./task";
 // SETUP 
 export const gProjectList = [];
 gProjectList.push(new Project('Example Project'));
-gProjectList[0].addTask( new Task('Example Task'));
+
+const exampleTask = new Task('Example Task');
+exampleTask.description = 'This is an example to task.';
+exampleTask.dueDate = '2099-1-1';
+exampleTask.priority = 'low';
+
+gProjectList[0].addTask( exampleTask );
 
 setupDom();
