@@ -127,12 +127,12 @@ function buildTask(task, project)
     const description = document.createElement('p');
     description.textContent = task.description;
     const dueDate = document.createElement('p');
-    dueDate.textContent = `Due Date: ${task.dueDate}`;
+    dueDate.textContent = `Due: ${task.dueDate}`;
     const priority = document.createElement('p');
     priority.textContent = `Priority: ${task.priority}`;
 
     const editButton = createButton('edit', () => {
-        options.remove();
+        info.remove();
         taskCard.appendChild( buildTaskForm(task) );
 
     });
@@ -141,18 +141,46 @@ function buildTask(task, project)
         project.removeTask(task);
         taskCard.remove();
     });
-
+    // to expand task card to show more info
+    const moreButton = createButton('more', () => {
+        extraInfo.style.display = 'block';
+        moreButton.style.display = 'none';
+        lessButton.style.display = 'inline';
+    });
+    
+    // to hide extra task info
+    const lessButton = createButton('less', () => {
+        extraInfo.style.display = 'none';
+        lessButton.style.display = 'none';
+        moreButton.style.display = 'inline';
+    });
+    lessButton.style.display = 'none';
+    // standard info 
+    const standardInfo = document.createElement('div');
+    standardInfo.appendChild(name);
+    standardInfo.appendChild(dueDate);
+    // extra info 
+    const extraInfo = document.createElement('div');
+    extraInfo.appendChild(description);
+    extraInfo.appendChild(priority);
+    extraInfo.style.display = 'none';
+    
+    // option buttons
     const options = document.createElement('div');
-    options.appendChild(name);
-    options.appendChild(dueDate);
-    options.appendChild(priority);
-    options.appendChild(description);
+    options.appendChild(moreButton);
+    options.appendChild(lessButton);
     options.appendChild(editButton);
     options.appendChild(rmvButton);
-
+    
+    // Task info container 
+    const info = document.createElement('div');
+    info.appendChild( standardInfo );
+    info.appendChild( extraInfo );
+    info.appendChild( options );
+    
     const taskCard = document.createElement('div');
     taskCard.setAttribute('id', 'id'+project.timestamp);
-    taskCard.appendChild(options);
+    taskCard.appendChild( info );
 
     return taskCard;
 }
