@@ -1,3 +1,5 @@
+import './style.css';
+
 import { setupDom } from "./dom";
 import { Project } from "./project";
 import { Task } from "./task";
