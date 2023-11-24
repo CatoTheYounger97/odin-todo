@@ -65,7 +65,8 @@ function buildProject(project)
     displayTask(project, taskCard);
     
     const projectCard = document.createElement('div');
-    projectCard.setAttribute('id', 'id'+project.timestamp);
+    // projectCard.setAttribute('id', 'id'+project.timestamp);
+    projectCard.classList.add('ProjectCard');
     projectCard.appendChild(options);
     projectCard.appendChild(taskCard);
     projectCard.appendChild(addTask);
@@ -189,7 +190,8 @@ function buildTask(task, project)
     info.appendChild( options );
     
     const taskCard = document.createElement('div');
-    taskCard.setAttribute('id', 'id'+project.timestamp);
+    // taskCard.setAttribute('id', 'id'+project.timestamp);
+    taskCard.classList.add('TaskCard');
     taskCard.appendChild( info );
 
     return taskCard;
