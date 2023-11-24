@@ -165,29 +165,29 @@ function buildTask(task, project)
         moreButton.style.display = 'inline';
     });
     lessButton.style.display = 'none';
-    // standard info 
-    const standardInfo = document.createElement('div');
-    standardInfo.appendChild(checkBox);
-    standardInfo.appendChild(name);
-    standardInfo.appendChild(dueDate);
-    // extra info 
-    const extraInfo = document.createElement('div');
-    extraInfo.appendChild(description);
-    extraInfo.appendChild(priority);
-    extraInfo.style.display = 'none';
-    
+
     // option buttons
     const options = document.createElement('div');
     options.appendChild(moreButton);
     options.appendChild(lessButton);
     options.appendChild(editButton);
     options.appendChild(rmvButton);
+    // standard info 
+    const standardInfo = document.createElement('div');
+    standardInfo.appendChild(checkBox);
+    standardInfo.appendChild(name);
+    standardInfo.appendChild(dueDate);
+    standardInfo.appendChild(options);
+    // extra info 
+    const extraInfo = document.createElement('div');
+    extraInfo.appendChild(description);
+    extraInfo.appendChild(priority);
+    extraInfo.style.display = 'none';
     
     // Task info container 
     const info = document.createElement('div');
     info.appendChild( standardInfo );
     info.appendChild( extraInfo );
-    info.appendChild( options );
     
     const taskCard = document.createElement('div');
     // taskCard.setAttribute('id', 'id'+project.timestamp);

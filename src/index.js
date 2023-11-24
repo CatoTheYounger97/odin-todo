@@ -15,4 +15,14 @@ exampleTask.priority = 'low';
 
 gProjectList[0].addTask( exampleTask );
 
+// fake data for styling purposes 
+
+for (let i = 1; i < 4; ++i) 
+{
+    gProjectList.push(new Project('Example Project'));
+    for (let j = 0; j < i; ++j)
+        gProjectList[i].addTask( exampleTask );
+}
+
+
 setupDom();
