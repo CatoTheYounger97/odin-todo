@@ -20,7 +20,8 @@ export function displayProject()
     parent.innerHTML = '';
 
     const newProjectButton = createButton('+Project', () => {
-        parent.appendChild(buildProjectForm('new'));
+        // parent.appendChild(buildProjectForm('new'));
+        parent.insertBefore( buildProjectForm('new'), parent.firstElementChild );
         newProjectButton.style.display = 'none';
     });
     newProjectButton.setAttribute('id', 'new-project');
@@ -90,7 +91,7 @@ function buildProjectForm(project)
             const newProject = new Project('New Project');
             newProject.name = input.value;
 
-            gProjectList.push(newProject);
+            gProjectList.unshift(newProject);
             console.log(gProjectList);
         } else {
             project.name = input.value;
@@ -168,10 +169,10 @@ function buildTask(task, project)
 
     // option buttons
     const options = document.createElement('div');
+    options.appendChild(rmvButton);
+    options.appendChild(editButton);
     options.appendChild(moreButton);
     options.appendChild(lessButton);
-    options.appendChild(editButton);
-    options.appendChild(rmvButton);
     // standard info 
     const standardInfo = document.createElement('div');
     standardInfo.appendChild(checkBox);
@@ -183,6 +184,7 @@ function buildTask(task, project)
     extraInfo.appendChild(description);
     extraInfo.appendChild(priority);
     extraInfo.style.display = 'none';
+    extraInfo.setAttribute('id', 'extra-info');
     
     // Task info container 
     const info = document.createElement('div');

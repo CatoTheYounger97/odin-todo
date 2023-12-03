@@ -20,8 +20,14 @@ gProjectList[0].addTask( exampleTask );
 for (let i = 1; i < 4; ++i) 
 {
     gProjectList.push(new Project('Example Project'));
-    for (let j = 0; j < i; ++j)
+    for (let j = 0; j < i; ++j) 
+    {
+        const exampleTask = new Task('Example Task');
+        exampleTask.description = 'This is an example task.';
+        exampleTask.dueDate = '2099-01-01';
+        exampleTask.priority = 'low';
         gProjectList[i].addTask( exampleTask );
+    }
 }
 
 
