@@ -20,17 +20,16 @@ export function displayProject()
     parent.innerHTML = '';
 
     const newProjectButton = createButton('+Project', () => {
-        // parent.appendChild(buildProjectForm('new'));
         parent.insertBefore( buildProjectForm('new'), parent.firstElementChild );
         newProjectButton.style.display = 'none';
     });
     newProjectButton.setAttribute('id', 'new-project');
+    parent.appendChild(newProjectButton);
     
     gProjectList.forEach((p) => {
         parent.appendChild( buildProject(p) );
     });
 
-    parent.appendChild(newProjectButton);
 }
 
 
@@ -46,7 +45,7 @@ function buildProject(project)
 
     });
 
-    const rmvButton = createButton('X', () => {
+    const rmvButton = createButton('delete', () => {
         gProjectList.splice(gProjectList.indexOf(project), 1);
         projectCard.remove();
     });
@@ -59,6 +58,7 @@ function buildProject(project)
     const options = document.createElement('div');
     options.appendChild(projectName);
     options.appendChild(editButton);
+    options.appendChild(addTask);
     options.appendChild(rmvButton);
     
     const taskCard = document.createElement('div');
@@ -70,7 +70,6 @@ function buildProject(project)
     projectCard.classList.add('ProjectCard');
     projectCard.appendChild(options);
     projectCard.appendChild(taskCard);
-    projectCard.appendChild(addTask);
 
     return projectCard;
 }
@@ -106,6 +105,7 @@ function buildProjectForm(project)
     });
     
     const form = document.createElement('form');
+    form.classList.add('ProjectForm');
     form.appendChild(input);
     form.appendChild(button);
     form.appendChild(cancelBtn);
@@ -127,7 +127,7 @@ function buildTask(task, project)
     const name = document.createElement('p');
     name.textContent = task.name;
     const description = document.createElement('p');
-    description.textContent = task.description;
+    description.textContent = `Notes: ${task.description}`;
     const dueDate = document.createElement('p');
     dueDate.textContent = `Due: ${task.dueDate}`;
     const priority = document.createElement('p');
@@ -147,17 +147,21 @@ function buildTask(task, project)
         taskCard.appendChild( buildTaskForm(task) );
 
     });
+    editButton.classList.add('EditTaskButton');
 
-    const rmvButton = createButton('X', () => {
+    const rmvButton = createButton('delete', () => {
         project.removeTask(task);
         taskCard.remove();
     });
+    rmvButton.classList.add('DeleteTaskButton');
+
     // to expand task card to show more info
     const moreButton = createButton('more', () => {
         extraInfo.style.display = 'block';
         moreButton.style.display = 'none';
         lessButton.style.display = 'inline';
     });
+    moreButton.classList.add('MoreButton');
     
     // to hide extra task info
     const lessButton = createButton('less', () => {
@@ -166,29 +170,38 @@ function buildTask(task, project)
         moreButton.style.display = 'inline';
     });
     lessButton.style.display = 'none';
+    lessButton.classList.add('LessButton');
 
     // option buttons
     const options = document.createElement('div');
-    options.appendChild(rmvButton);
-    options.appendChild(editButton);
     options.appendChild(moreButton);
     options.appendChild(lessButton);
+    options.appendChild(editButton);
+    options.appendChild(rmvButton);
+    options.classList.add('Options');
+    // task header
+    const taskHeader = document.createElement('div');
+    taskHeader.appendChild(checkBox);
+    taskHeader.appendChild(name);
+    taskHeader.classList.add('TaskHeader');
+
     // standard info 
     const standardInfo = document.createElement('div');
-    standardInfo.appendChild(checkBox);
-    standardInfo.appendChild(name);
     standardInfo.appendChild(dueDate);
-    standardInfo.appendChild(options);
+    standardInfo.appendChild(priority);
+    standardInfo.classList.add('StandardInfo');
+
     // extra info 
     const extraInfo = document.createElement('div');
     extraInfo.appendChild(description);
-    extraInfo.appendChild(priority);
     extraInfo.style.display = 'none';
-    extraInfo.setAttribute('id', 'extra-info');
+    extraInfo.classList.add('ExtraInfo');
     
     // Task info container 
     const info = document.createElement('div');
+    info.appendChild( taskHeader );
     info.appendChild( standardInfo );
+    info.appendChild( options );
     info.appendChild( extraInfo );
     
     const taskCard = document.createElement('div');
@@ -245,6 +258,7 @@ function buildTaskForm(task, project)
     }
     
     const form = document.createElement('form');
+    form.classList.add('TaskForm');
     form.appendChild(formInputs);
     form.appendChild(saveBtn);
     form.appendChild(cancelBtn);
@@ -308,7 +322,7 @@ function createTaskFormNodes()
         label: prioLabel, 
     };
 
-    return { name, desc, date, prio };
+    return { name, date, prio, desc };
 }
 
 // HELPER FUNCS

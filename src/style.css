@@ -4,30 +4,42 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+body {
+    margin: auto;
+    background-color: navy;
+}
+
 #container {
     display: grid;
-    grid-template-columns: 1000px ;
+    grid-template-columns: minmax(auto, 1050px) ;
     justify-content: center;
     gap: 10px;
-    position: relative;
+
 }
 
-#container > #new-project {
-    width: 60px;
-    height: 60px;
-    position: fixed;
-    left: calc(50vw - 580px);
+#new-project {
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;
+    border: 0;
+    justify-self: center;
+    margin-top: 10px;
 }
 
-.ProjectCard {
-    border: 2px solid black;
+#container > form {
+    width: 500px;
+    justify-self: center;
+    margin-top: 10px;
 }
 
 .ProjectCard > div:first-child,
-.ProjectCard > form,
+.ProjectCard > .ProjectForm,
 #container > form  
  {
     height: 30px;
+    border-radius: 15px;
+    padding-left: 10px;
+
     display: flex;
     align-items: center;
     gap: 10px;
@@ -36,33 +48,78 @@
 }
 
 .ProjectCard > div:nth-child(2) {
-    border: 1px solid green;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-template-rows: auto;
 }
 
+.ProjectCard {
+    background-color: lightslategray;   
+    border-radius: 20px 20px 15px 15px;
+}
 
 .TaskCard {
-    border: 1px solid blue;
+    border-radius: 15px;
+    background-color: white;
+    margin: 10px;
 }
 
-.TaskCard > div > div {
+.TaskCard .TaskHeader  {
+    height: 30px;
+    padding-left: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 10px;
+    
+    border-radius: 15px;
+    background-color: lightskyblue;
+
+}
+
+.TaskCard .StandardInfo {
+    padding-left: 10px;
+}
+
+p {
+    margin: 0;
 }
 
 .TaskCard > div {
+    height: 120px;
+    display: grid;
     position: relative;
 }
 
-.TaskCard #extra-info {
-    position: absolute;
-    z-index: 1;
-    background-color: white;
-    border: 1px solid red;
+.TaskCard .Options {
+    justify-self: center;
+    align-self: end;
 }
 
-.TaskCard button {
-    width: 40px;
+.TaskCard .Options button {
+    width: 50px;
+    background-color: lightskyblue;
+    border: 1px solid lightgray;
+}
+
+.TaskCard .MoreButton,
+.TaskCard .LessButton {
+    border-radius: 15px 0 0 0;
+}
+
+.TaskCard .EditTaskButton {
+
+}
+
+.TaskCard .DeleteTaskButton {
+    border-radius: 0 15px 0 0;
+}
+
+.TaskCard .ExtraInfo {
+    width: 180px;
+    padding: 10px;
+    border-radius: 15px;
+    position: absolute;
+    top: 120px;
+    z-index: 1;
+    background-color: white;
 }
