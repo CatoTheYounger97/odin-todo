@@ -19,7 +19,7 @@ export function displayProject()
 {
     saveStorage();
 
-    parent = document.querySelector('#container');
+    const parent = document.querySelector('#container');
     parent.innerHTML = '';
 
     const newProjectButton = createButton('+Project', () => {

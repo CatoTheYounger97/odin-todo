@@ -3,7 +3,7 @@ import './style.css';
 import { setupDom } from "./dom";
 import { Project } from "./project";
 import { Task } from "./task";
-import { loadStorage, saveStorage } from './storage';
+import { loadStorage } from './storage';
 
 // SETUP 
 export const gProjectList = [];
