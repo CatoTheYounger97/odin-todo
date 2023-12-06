@@ -73,9 +73,8 @@ body {
 }
 
 .TaskCard {
-    height: 120px;
-    border-radius: 15px;
-    background-color: white;
+    /* height: 120px; */
+    /* background-color: white; */
     position: relative;
 }
 
@@ -88,7 +87,7 @@ body {
     
     border-radius: 15px;
     background-color: lightskyblue;
-
+    
 }
 
 .TaskCard .StandardInfo {
@@ -101,7 +100,9 @@ p {
 
 .TaskCard > div {
     height: 120px;
+    border-radius: 15px;
     display: grid;
+    background-color: white;
 }
 
 .TaskCard .Options {
