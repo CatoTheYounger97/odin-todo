@@ -11,7 +11,7 @@ body {
 
 #container {
     display: grid;
-    grid-template-columns: minmax(auto, 1050px) ;
+    grid-template-columns: minmax(auto, 850px) ;
     justify-content: center;
     gap: 10px;
 
@@ -32,6 +32,19 @@ body {
     margin-top: 10px;
 }
 
+#container > form > input,
+.ProjectCard > .ProjectForm input {
+    border-radius: 15px;
+}
+
+#container > form button,
+.ProjectCard > .ProjectForm button,
+.ProjectCard .ProjectOptions button {
+    border-radius: 15px;
+    width: 50px;
+    border: 1px solid lightslategray;
+}
+
 .ProjectCard > div:first-child,
 .ProjectCard > .ProjectForm,
 #container > form  
@@ -50,7 +63,8 @@ body {
 .ProjectCard > div:nth-child(2) {
     display: grid;
     grid-template-columns: repeat(auto-fit, 200px);
-    grid-template-rows: auto;
+    gap: 10px;
+    padding: 10px;
 }
 
 .ProjectCard {
@@ -59,9 +73,10 @@ body {
 }
 
 .TaskCard {
+    height: 120px;
     border-radius: 15px;
     background-color: white;
-    margin: 10px;
+    position: relative;
 }
 
 .TaskCard .TaskHeader  {
@@ -87,7 +102,6 @@ p {
 .TaskCard > div {
     height: 120px;
     display: grid;
-    position: relative;
 }
 
 .TaskCard .Options {
@@ -101,13 +115,14 @@ p {
     border: 1px solid lightgray;
 }
 
+.TaskCard .Options button:hover {
+    background-color: blue;
+    color: white;
+}
+
 .TaskCard .MoreButton,
 .TaskCard .LessButton {
     border-radius: 15px 0 0 0;
-}
-
-.TaskCard .EditTaskButton {
-
 }
 
 .TaskCard .DeleteTaskButton {
@@ -115,11 +130,66 @@ p {
 }
 
 .TaskCard .ExtraInfo {
-    width: 180px;
+    width: 200px;
     padding: 10px;
     border-radius: 15px;
     position: absolute;
     top: 120px;
     z-index: 1;
     background-color: white;
+}
+
+.TaskForm {
+    width: 200px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.TaskForm > div > div:first-of-type {
+    height: 30px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    border-radius: 15px;
+    background-color: lightskyblue;
+}
+
+.TaskForm > div > div + div {
+    padding-left: 10px;
+}
+
+.TaskFormOption {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+.TaskForm button {
+    width: 50px;
+    background-color: lightskyblue;
+    border: 1px solid lightgray;
+}
+
+.TaskForm button:hover {
+    background-color: blue;
+    color: white;
+}
+
+.TaskFormSave {
+    border-radius: 15px 0 0 0;
+}
+
+.TaskFormCancel {
+    border-radius: 0 15px 0 0;
+}
+
+.TaskForm input[type='text'] {
+    width: 120px;
+}
+
+textarea {
+    width: 180px;
+    resize: vertical;
 }

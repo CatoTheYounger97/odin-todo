@@ -1,5 +1,6 @@
 import { gProjectList } from ".";
 import { Project } from "./project";
+import { saveStorage } from "./storage";
 import { Task } from "./task";
 
 // INITIAL DOM SETUP
@@ -16,6 +17,8 @@ export function setupDom()
 // DISPLAY PROJECT
 export function displayProject()
 {
+    saveStorage();
+
     parent = document.querySelector('#container');
     parent.innerHTML = '';
 
@@ -39,7 +42,7 @@ function buildProject(project)
     projectName.textContent = project.name;
 
     const editButton = createButton('edit', () => {
-        options.remove();
+        projectTitle.remove();
         addTask.remove();
         projectCard.insertBefore( buildProjectForm(project), projectCard.firstElementChild );
 
@@ -48,19 +51,26 @@ function buildProject(project)
     const rmvButton = createButton('delete', () => {
         gProjectList.splice(gProjectList.indexOf(project), 1);
         projectCard.remove();
+
+        displayProject();
     });
 
     const addTask = createButton('+Task', () => {
-        projectCard.appendChild( buildTaskForm('new', project) );
+        taskCard.insertBefore( buildTaskForm('new', project), taskCard.firstElementChild ); 
         addTask.style.display = 'none';
     });
 
+    
     const options = document.createElement('div');
-    options.appendChild(projectName);
     options.appendChild(editButton);
     options.appendChild(addTask);
     options.appendChild(rmvButton);
+    options.classList.add('ProjectOptions');
     
+    const projectTitle = document.createElement('div');
+    projectTitle.appendChild(projectName);
+    projectTitle.appendChild(options);
+
     const taskCard = document.createElement('div');
     
     displayTask(project, taskCard);
@@ -68,7 +78,7 @@ function buildProject(project)
     const projectCard = document.createElement('div');
     // projectCard.setAttribute('id', 'id'+project.timestamp);
     projectCard.classList.add('ProjectCard');
-    projectCard.appendChild(options);
+    projectCard.appendChild(projectTitle);
     projectCard.appendChild(taskCard);
 
     return projectCard;
@@ -103,12 +113,15 @@ function buildProjectForm(project)
     const cancelBtn = createButton('cancel', () => {
         displayProject();
     });
+
+    const options = document.createElement('div');
+    options.appendChild(button);
+    options.appendChild(cancelBtn);
     
     const form = document.createElement('form');
     form.classList.add('ProjectForm');
     form.appendChild(input);
-    form.appendChild(button);
-    form.appendChild(cancelBtn);
+    form.appendChild(options);
 
     return form;
 }
@@ -152,6 +165,8 @@ function buildTask(task, project)
     const rmvButton = createButton('delete', () => {
         project.removeTask(task);
         taskCard.remove();
+
+        displayProject();
     });
     rmvButton.classList.add('DeleteTaskButton');
 
@@ -245,23 +260,33 @@ function buildTaskForm(task, project)
         form.remove();
         displayProject();
     });
+    saveBtn.classList.add('TaskFormSave');
 
     const cancelBtn = createButton('cancel', () => {
         displayProject();
     });
+    cancelBtn.classList.add('TaskFormCancel');
     
     const formInputs = document.createElement('div');
     for (let n in nodes )
     {
-        formInputs.appendChild(nodes[n].label);
-        formInputs.appendChild(nodes[n].input);
+        const nodeDiv = document.createElement('div');
+        nodeDiv.appendChild(nodes[n].label);
+        nodeDiv.appendChild(nodes[n].input);
+
+        formInputs.appendChild(nodeDiv);
     }
+
+    const option = document.createElement('div');
+    option.appendChild(saveBtn);
+    option.appendChild(cancelBtn);
+    option.classList.add('TaskFormOption');
+
     
     const form = document.createElement('form');
     form.classList.add('TaskForm');
     form.appendChild(formInputs);
-    form.appendChild(saveBtn);
-    form.appendChild(cancelBtn);
+    form.appendChild(option);
 
     return form;
 }
@@ -282,10 +307,10 @@ function createTaskFormNodes()
 
     // task description 
     const descLabel = document.createElement('label');
-    descLabel.textContent = 'Description:';
-    descLabel.setAttribute('for', 'description');    
+    descLabel.textContent = 'Notes:';
+    descLabel.setAttribute('for', 'notes');    
     const descTextArea = document.createElement('textarea');
-    descTextArea.setAttribute('id', 'description');
+    descTextArea.setAttribute('id', 'notes');
     const desc = { 
         input: descTextArea, 
         label: descLabel, 
